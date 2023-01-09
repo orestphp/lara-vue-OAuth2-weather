@@ -9,12 +9,12 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Scripts -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ secure_url('css/app.css') }}" type="text/css">
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ secure_url('js/app.js') }}"></script>
 
 
         <!-- Styles -->
@@ -43,14 +43,14 @@
 
                     <label class="gray">Remember me</label>
                     <input type="checkbox">
-<!-- { route('google.login') }} -->
-                    <a href="#" class="btn btn-google btn-user btn-block forgetpass">
+
+                    <a href="#" class="btn btn-google forgetpass">
                         <i class="fab fa-google fa-fw"></i> Forget Password?
                     </a>
 
                     <input type="submit" value="Sign in" class="btn1">
                 </form>
-                <a href="#" class="dnthave">Don’t have an account? Sign up</a>
+                <a href="{{ route('google.login') }}" class="dnthave">Don’t have an account? Sign up</a>
             </div>
             <div class="footer">
 

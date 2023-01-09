@@ -31,9 +31,9 @@ return [
     ],
 
     'google' => [
-        'client_id' => '', //USE FROM Google DEVELOPER ACCOUNT
-        'client_secret' => '', //USE FROM Google DEVELOPER ACCOUNT
-        'redirect' => 'https://0a41-106-212-124-50.ngrok.io/google/callback/'
+        'client_id' => '143273648787-1jb1sak0mq6ia13qkoqvrv7lkf7toi2p.apps.googleusercontent.com',
+        'client_secret' => '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',
+        'redirect' => 'https://c4d9-188-230-40-74.eu.ngrok.io/google/callback'
     ],
 
 ];
