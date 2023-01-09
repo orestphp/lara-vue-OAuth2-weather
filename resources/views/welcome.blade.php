@@ -9,12 +9,12 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Scripts -->
-        <link rel="stylesheet" href="{{ secure_url('css/app.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ secure_url('css/app1.css') }}" type="text/css">
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="{{ secure_url('js/app.js') }}"></script>
+        <script src="{{ secure_url('js/app1.js') }}"></script>
 
 
         <!-- Styles -->
@@ -34,21 +34,8 @@
                 <span class="error animated tada" id="msg"></span>
                 <form name="form1" class="box" onsubmit="return checkStuff()">
                     <h4>Admin<span>Dashboard</span></h4>
-
-                    <h5>Sign in to your account.</h5>
-                    <input type="text" name="email" placeholder="Email" autocomplete="off">
-
-                    <i class="typcn typcn-eye" id="eye"></i>
-                    <input type="password" name="password" placeholder="Passsword" id="pwd" autocomplete="off">
-
-                    <label class="gray">Remember me</label>
-                    <input type="checkbox">
-
-                    <a href="#" class="btn btn-google forgetpass">
-                        <i class="fab fa-google fa-fw"></i> Forget Password?
-                    </a>
-
-                    <input type="submit" value="Sign in" class="btn1">
+                    <img width="400" src="images/googleDark.jpg" alt="">
+                    <input type="button" value="Sign in" class="btn1" onclick="document.location.href='/login'">
                 </form>
                 <a href="{{ route('google.login') }}" class="dnthave">Don’t have an account? Sign up</a>
             </div>
