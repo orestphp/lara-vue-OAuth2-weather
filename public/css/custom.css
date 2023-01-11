@@ -204,3 +204,19 @@ label span {
     color: gray;
 }
 
+
+body {
+    font-family: 'Nunito', sans-serif;
+}
+.parent {
+    position: relative;
+}
+.child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -180%);
+}
+.child a {
+    margin: 0 3px;
+}
