@@ -8,11 +8,13 @@ window.Vue = require('vue').default;
 window.Event = new Vue();
 
 // Vuex
+import Vuex from 'vuex'
+Vue.use(Vuex)
 import store from './store'
 if (window.user) {
-    store.commit(store.window.user)
+    store.commit('setUser', store.window.user);
 } else {
-    store.dispatch(actions.users.state().logged_user)
+    store.dispatch('getUser');
 }
 
 // Api Plugins
@@ -36,5 +38,6 @@ Vue.use(VueRouter);
 const app = new Vue({
     el: '#app',
     router,
+    store,
 });
 

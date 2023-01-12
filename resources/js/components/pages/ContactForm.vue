@@ -1,35 +1,37 @@
 <template>
     <div>
-        <div class="gl_contact_row">
-            <div class="gl_contact_col">
-                <label>Full Name <span style="color: red">*</span></label>
-                <span class="gl_contact_error_text error_mes_full_name"></span>
-                <input v-model="full_name" v-on:blur="validate_inline('full_name')" value=""/>
+        <form name="form2" class="box" onsubmit="">
+            <div class="gl_contact_row">
+                <div class="gl_contact_col">
+                    <label>Full Name <span style="color: red">*</span></label>
+                    <span class="gl_contact_error_text error_mes_full_name"></span>
+                    <input v-model="full_name" v-on:blur="validate_inline('full_name')" value=""/>
+                </div>
             </div>
-        </div>
-        <div class="gl_contact_row">
-            <div class="gl_contact_col">
-                <label>Email <span style="color: red">*</span></label>
-                <span class="gl_contact_error_text error_mes_email"></span>
-                <input v-model="email" v-on:blur="validate_inline('email')" value=""/>
+            <div class="gl_contact_row">
+                <div class="gl_contact_col">
+                    <label>Email <span style="color: red">*</span></label>
+                    <span class="gl_contact_error_text error_mes_email"></span>
+                    <input v-model="email" v-on:blur="validate_inline('email')" value=""/>
+                </div>
             </div>
-        </div>
-        <div class="gl_contact_row">
-            <div class="gl_contact_col gl_contact_col_half">
-                <label>Subject</label>
-                <input v-model="subject" value=""/>
+            <div class="gl_contact_row">
+                <div class="gl_contact_col gl_contact_col_half">
+                    <label>Subject</label>
+                    <input v-model="subject" value=""/>
+                </div>
             </div>
-        </div>
-        <div class="gl_contact_row">
-            <div class="gl_contact_col gl_contact_col_full">
-                <label>Message <span style="color: red">*</span></label>
-                <span class="gl_contact_error_text error_mes_message"></span>
-                <textarea v-model="message" v-on:blur="validate_inline('message')"></textarea>
+            <div class="gl_contact_row">
+                <div class="gl_contact_col gl_contact_col_full">
+                    <label>Message <span style="color: red">*</span></label>
+                    <span class="gl_contact_error_text error_mes_message"></span>
+                    <textarea v-model="message" v-on:blur="validate_inline('message')"></textarea>
+                </div>
             </div>
-        </div>
-        <div class="gl_contact_row">
-            <a class="gl_btn gl_contact" href="#" v-on:click="send($event)">Send</a>
-        </div>
+            <div class="gl_contact_row">
+                <a class="gl_btn gl_contact" href="#" v-on:click="send($event)">Send</a>
+            </div>
+        </form>
     </div>
 </template>
 <script>

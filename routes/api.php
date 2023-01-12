@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\v1\UserController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,12 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+Route::get('/user/{id}', function (Request $request) {
+    $user = User::where('id', $request->id);
+    return response()->json($user);
+});
 
 // Google URL
 Route::prefix('google')->name('google.')->group( function(){
-    Route::get('login', [UserController::class, 'loginWithGoogle'])->name('login');
-    Route::any('callback', [UserController::class, 'callbackFromGoogle'])->name('callback');
+    Route::get('login', [UserController::class, 'loginWithGoogle'])->name('api.login');
+    Route::any('callback', [UserController::class, 'callbackFromGoogle'])->name('api.callback');
 });
