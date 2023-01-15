@@ -1,3 +1,6 @@
+import VueAxios from 'vue-axios';
+import VueSocialauth from 'vue-social-auth';
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -5,21 +8,30 @@
  */
 require('./bootstrap');
 window.Vue = require('vue').default;
-window.Event = new Vue();
+
+// VueSocialauth
+Vue.use(VueAxios, axios);
+Vue.use(VueSocialauth, {
+    providers: {
+        google: {
+            clientId: `${process.env.MIX_APP_OAUTH_CLIENT_ID}`,
+            client_secret: `${process.env.MIX_APP_OAUTH_CLIENT_SECRET}`,
+            redirectUri: `${process.env.MIX_API_URL}/google/callback`
+        }
+    }
+});
 
 // Vuex
-import Vuex from 'vuex'
+import Vuex from 'vuex';
 Vue.use(Vuex)
-import store from './store'
-if (window.user) {
-    store.commit('setUser', store.window.user);
-} else {
-    store.dispatch('getUser');
-}
+import store from './store';
+
+// Check user
+store.dispatch('getUser');
 
 // Api Plugins
 import apiPlugin from "./plugins";
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 Vue.use(apiPlugin);
 
 

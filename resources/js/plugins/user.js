@@ -8,18 +8,15 @@ import store from './../store';
  *   console.log(result)
  * }
  *
- * @param id
- * @returns {Promise<unknown>}
+ * @returns mix
+ * @param url
  */
-export function getUser(id) {
-    return new Promise((resolve, reject) => {
-        axios.get(`${store.app.apiUrl}/user/${id}`)
-            .then(result => {
-                store.commit('setUser', result.data);
-                resolve();
-            })
-            .catch(error => {
-                reject(error.response && error.response.data.message || 'Error.');
-            });
-    });
+export function getUser(url) {
+    axios.get(url)
+        .then(result => {
+            return result.data;
+        })
+        .catch(error => {
+            console.log(error.response && error.response.data.message || 'Error.');
+        });
 }

@@ -31,9 +31,9 @@ return [
     ],
 
     'google' => [
-        'client_id' => '143273648787-1jb1sak0mq6ia13qkoqvrv7lkf7toi2p.apps.googleusercontent.com',
-        'client_secret' => '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',
-        'redirect' => 'https://852d-188-230-40-74.eu.ngrok.io/google/callback'
+        'client_id' => env('MIX_APP_OAUTH_CLIENT_ID'),
+        'client_secret' => env('MIX_APP_OAUTH_CLIENT_SECRET'),
+        'redirect' => env('MIX_API_URL').'/google/callback'
     ],
 
 ];

@@ -1,50 +1,46 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-Vue.use(Vuex)
-const debug = process.env.NODE_ENV !== 'production'
-const apiUrl = 'http://localhost:8002';
+import Vue from 'vue';
+import Vuex from 'vuex';
+Vue.use(Vuex);
+const debug = process.env.NODE_ENV !== 'production';
+
 //-------------------------------------------------------------------------
-// App module
-const app = {
-    state: () => ({
-        apiUrl: apiUrl,
-    })
-};
 // Users module
 const users = {
     state: () => ({
         loggedUser: {},
-        apiUrl: apiUrl,
     }),
     mutations: {
         setUser(state, user) {
             state.loggedUser = user
-        }
+        },
     },
     actions: {
-        getUser({commit, state}) {
-            return new Promise((resolve, reject) => {
-                axios.get(`${state.apiUrl}/api/user/1`)
+        async getUser({commit}) {
+            // get User
+            const token = localStorage.getItem('token');
+            if(token!=="") {
+                await axios.get(`${process.env.MIX_API_URL}/user/${token}`)
                     .then(result => {
-                        commit('setUser', result.data);
-                        resolve();
+                         commit('setUser', result.data);
                     })
                     .catch(error => {
-                        reject(error.response && error.response.data.message || 'Error.');
+                        console.log(error.response && error.response.data.message || 'Error.');
                     });
-            });
+            } else {
+                // Logout
+                await commit('setUser', {});
+            }
         }
     },
     getters: {
-        loggedUser: state => state.loggedUser
+        loggedUser: state => state.loggedUser,
     }
 };
 //----------------------------------------------------------------------
 
 export default new Vuex.Store({
     modules: {
-        app,
         users
     },
     strict: debug
-})
+});

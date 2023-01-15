@@ -8,13 +8,15 @@ const routes = [
     },
     {
       path: '/home',
-      component: require('./components/pages/ContactForm.vue').default,
+      component: require('./components/pages/HomeComponent.vue').default,
       props: true
     },
   ];
 
 const routerRender = routes.length !== 0 ?
-    new VueRouter({routes}) :
+    new VueRouter({
+        routes
+    }) :
     null;
 
 export default routerRender;

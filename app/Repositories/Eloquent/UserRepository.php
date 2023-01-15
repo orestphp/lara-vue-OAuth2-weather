@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -42,37 +43,26 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param User $user
-     * @return User $user
+     * @param $googleUser
+     * @return User
      */
-    public function createUpdateViaGoogle(User $user): User
+    public function createUpdateViaGoogle($googleUser): User
     {
         // Check if User exists
-        $googleUser = User::where('email', $user->getEmail())->first();
+        $saveUser = User::updateOrCreate([
+            'google_id' => $googleUser->id,
+        ],[
+            'name' => $googleUser->name,
+            'email' => $googleUser->email,
+            'password' => Hash::make($googleUser->name.'@'.$googleUser->id),
+            'token' => $googleUser->token,
+            'refresh_token' => $googleUser->refreshToken,
+            'nickname' => $googleUser->nickname,
+            'avatar' => $googleUser->avatar,
+            'expires_in' => $googleUser->expiresIn,
+        ]);
 
-        if(!$googleUser) {
-
-            $saveUser = User::updateOrCreate([
-                'google_id' => $user->getId(),
-            ],[
-                'name' => $user->getName(),
-                'email' => $user->getEmail(),
-                'password' => Hash::make($user->getName().'@'.$user->getId()),
-                'token' => $user->token,
-                'refresh_token' => $user->refreshToken,
-                'nickname' => $user->getNickname(),
-                'avatar' => $user->getAvatar(),
-                'expires_in' => $user->expiresIn,
-            ]);
-        } else {
-
-            $saveUser = User::where('email',  $user->getEmail())->update([
-                'google_id' => $user->getId(),
-            ]);
-            $saveUser = User::where('email', $user->getEmail())->first();
-        }
-
-        Auth::loginUsingId($saveUser->id);
+        Auth::login($saveUser);
 
         return $saveUser;
     }
@@ -108,5 +98,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         }
 
         return $user;
+    }
+
+    public function getToken(User $user)
+    {
+        return $user->token;
     }
 }

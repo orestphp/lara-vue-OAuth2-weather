@@ -14,7 +14,9 @@ class UserGoogleFields extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('token')->nullable();
+            $table->string('token')->unique()->nullable();
+            $table->string('provider')->nullable();
+            $table->string('provider_id')->nullable();
             $table->string('refresh_token')->nullable();
             $table->string('nickname')->nullable();
             $table->string('avatar')->nullable();
@@ -31,6 +33,8 @@ class UserGoogleFields extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('token');
+            $table->dropColumn('provider');
+            $table->dropColumn('provider_id');
             $table->dropColumn('refresh_token');
             $table->dropColumn('nickname');
             $table->dropColumn('avatar');
