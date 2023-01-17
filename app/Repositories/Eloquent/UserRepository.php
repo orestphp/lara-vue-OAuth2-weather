@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Socialite\Facades\Socialite;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -100,8 +99,27 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return $user;
     }
 
-    public function getToken(User $user)
+    /**
+     * Simulate - Auth::check() && Auth::login()
+     * TODO: When Sanctum will be implemented, it will be removed
+     * @param $token
+     * @return array
+     */
+    public function checkAuth($token): array
     {
-        return $user->token;
+        if(!$token) return [];
+
+        $user = User::where('token', $token)->first();
+        if($user && $user->expires_in) {
+            $endTime = strtotime(
+                date("Y-m-d H:i:s", strtotime($user->updated_at.' +'.$user->expires_in.' seconds'))
+            );
+            if(time() > $endTime) {
+                // Logout
+                return [];
+            }
+        }
+        Auth::login($user);
+        return $user->setAppends(['ip', 'geoLocation'])->toArray();
     }
 }

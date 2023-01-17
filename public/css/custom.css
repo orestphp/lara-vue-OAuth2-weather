@@ -32,7 +32,8 @@ body, html {
     border-top: 10px solid #79a6fe;
     border-bottom: 10px solid #8BD17C;
     width: 400px;
-    height: 500px;
+    min-height: 500px;
+    display: flex;
     box-shadow: 1px 1px 108.8px 19.2px rgb(25,31,53);
 }
 
@@ -229,4 +230,19 @@ body {
 .notification {
     color: #d5d6db;
     padding: 5px;
+    width: 400px;
+}
+a.router-link-active {
+    color: white;
+    font-weight: bold;
+}
+li.router-link-active a {
+    color: #f66;
+}
+#logout {
+    font-weight: normal !important;
+}
+#dnthave2 {
+    cursor: default;
+    text-decoration: none;
 }

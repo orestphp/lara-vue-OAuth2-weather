@@ -6,18 +6,25 @@
  *   console.log(result)
  * }
  *
- * @param id
+ * @param lat
+ * @param lon
+ * @param token
  * @returns {Promise<unknown>}
  */
-export function getWeather() {
+export function getWeather(lat, lon, token) {
+    // TODO: if "localhost" & location discarded: get country`s capital lat & long
+    let clientLang = navigator.language || navigator.userLanguage;
+
+    // get Weather
     return new Promise((resolve, reject) => {
-        axios.get('/url')
+        axios.get(`${process.env.MIX_API_URL}/getweather?lat=${lat}&lon=${lon}&token=${token}`)
             .then(result => {
-                commit('setUser', result.data);
-                resolve();
+                // return JSON.stringify(result.data);
+                resolve(result.data);
             })
             .catch(error => {
-                reject(error.response && error.response.data.message || 'Error.');
+                console.log(error.response && error.response.data.message || 'Error.');
             });
     });
 }
+

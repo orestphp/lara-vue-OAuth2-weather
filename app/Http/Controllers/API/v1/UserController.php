@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\API\v1;
 
-
 use App\Repositories\UserRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
-use App\Models\User;
 
+/**
+ * Class UserController
+ * @package App\Http\Controllers\API\v1
+ */
 class UserController extends Controller
 {
     private $userRepository;
@@ -41,10 +43,21 @@ class UserController extends Controller
 
             // Response
             return view('index')->with('token', $googleUser->token);
-            // TODO: use Sanctum for tokens and fix SPA cors to stay on same page here
+            // TODO: implement Sanctum for tokens and fix SPA cors to stay on same page here
 
         } catch (\Throwable $th) {
             throw $th;
         }
+    }
+
+    /**
+     * @param $token
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getUserByToken($token)
+    {
+        $user = $this->userRepository->checkAuth($token);
+        // Response
+        return response()->json($user);
     }
 }

@@ -33,9 +33,9 @@
                 <div id="app">
                     <div class="parent">
                         <div class="child">
-                            <router-link to="/">Login</router-link>
+                            <router-link to="/" exact>Login</router-link>
                             <router-link to="/home">Home</router-link>
-                            <router-link id="logout" onclick="logout();" to="/">Logout</router-link>
+                            <router-link id="logout" onclick="logout()" to="/">Logout</router-link>
                         </div>
                     </div>
                     <router-view></router-view>

@@ -10,8 +10,12 @@
         <div v-else class="notification">
             You're not logged in!
         </div>
-        <div>
-            <vue-json-pretty class="notification" :data="{ key: 'value' }" />
+
+        <div v-if="status" class="notification">
+            <p>{{ status }}</p>
+        </div>
+        <div v-else>
+            <vue-json-pretty class="notification" :data="weatherJson" />
         </div>
     </div>
 </template>
@@ -28,22 +32,51 @@ export default {
     },
     data() {
         return {
-            token: localStorage.getItem('token')
+            token: localStorage.getItem('token'),
+            status: 'Locating …',
+            weatherJson: {},
         }
     },
     computed: {
         ...mapGetters(['loggedUser']),
     },
     mounted() {
-        let self = this;
-        // in case token expired, give time to check
-        setTimeout(function() {
-            if(_.isEmpty(self.loggedUser)) {
-                self.$router.push({ path: '/' });
-            }
-        }, 500);
+        if(!this.token) {
+            this.$router.push({ path: '/' });
+        } else {
+            this.geoFindMe();
+        }
     },
+    methods: {
+        geoFindMe() {
+            if (!navigator.geolocation) {
+                this.noGeo();
+            } else {
+                this.status = 'Locating …';
+                navigator.geolocation.getCurrentPosition(this.weatherSuccess, function error() {
+                    console.log('Sorry, no position available.');
+                });
+            }
+        },
+        async weatherSuccess(position) {
+            this.weatherJson = await this.$plugins.getWeather(
+                position.coords.latitude,
+                position.coords.longitude,
+                this.token
+            );
+            this.status = '';
+        },
+        async noGeo() {
+            if (!_.isEmpty(this.loggedUser.geoLocation)) {
+                let latitude = this.loggedUser.geoLocation.latitude;
+                let longitude = this.loggedUser.geoLocation.longitude;
+                this.weatherJson = await this.$plugins.getWeather(latitude, longitude);
+                this.status = '';
+            } else {
+                this.status = 'Geolocation is not supported by your browser';
+            }
+        }
+    }
 }
 </script>
-
 

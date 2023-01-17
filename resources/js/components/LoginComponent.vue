@@ -31,9 +31,8 @@ export default {
     },
     methods: {
         authProvider(provider) {
-            let self = this;
             this.$auth.authenticate(provider).then(response => {
-                self.socialLogin(provider, response)
+                this.socialLogin(provider, response)
             }).catch(error => {
                 console.log(error)
             })
