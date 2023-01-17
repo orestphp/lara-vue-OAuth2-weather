@@ -52,12 +52,31 @@ class UserController extends Controller
 
     /**
      * @param $token
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function getUserByToken($token)
     {
-        $user = $this->userRepository->checkAuth($token);
+        $user = $this->userRepository->findByToken($token);
+        if(!$user) {
+            return response('Unauthenticated.', 401);
+        }
+        $user = $this->userRepository->checkProviderAuth($user);
         // Response
         return response()->json($user);
+    }
+
+    /**
+     * @param $token
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
+    public function deleteUser($token)
+    {
+        $user = $this->userRepository->findByToken($token);
+        if(!$user) {
+            return response('Unauthenticated.', 401);
+        }
+        $this->userRepository->delete($user->id);
+        // Response
+        return response()->json('success');
     }
 }

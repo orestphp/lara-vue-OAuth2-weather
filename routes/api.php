@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 // User check
 Route::get('/user/{token}', [UserController::class, 'getUserByToken']);
+// User destroy
+Route::delete('/user/{token}', [UserController::class, 'deleteUser']);
 // Weather
 Route::get('/getweather', [WeatherController::class, 'getWeather']);
 

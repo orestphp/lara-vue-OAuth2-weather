@@ -29,9 +29,9 @@ class WeatherController extends Controller
     {
         // Get user
         $token = $request->input('token');
-        $user = $this->userRepository->checkAuth($token);
+        $user = $this->userRepository->findByToken($token);
         if(!$user) {
-            return response()->json('Unauthorised.', 403);
+            return response()->json('Unauthorised.', 401);
         }
 
         // Init params

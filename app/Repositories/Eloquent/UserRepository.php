@@ -4,11 +4,13 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\User;
 use App\Repositories\UserRepositoryInterface;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -61,7 +63,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             'expires_in' => $googleUser->expiresIn,
         ]);
 
-        Auth::login($saveUser);
+        // Auth::login($saveUser);
 
         return $saveUser;
     }
@@ -100,16 +102,22 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
+     * @param $token
+     * @return Model|null
+     */
+    public function findByToken($token): ?Model
+    {
+        return $this->model->where('token', $token)->first();
+    }
+
+    /**
      * Simulate - Auth::check() && Auth::login()
      * TODO: When Sanctum will be implemented, it will be removed
-     * @param $token
+     * @param User $user
      * @return array
      */
-    public function checkAuth($token): array
+    public function checkProviderAuth($user): array
     {
-        if(!$token) return [];
-
-        $user = User::where('token', $token)->first();
         if($user && $user->expires_in) {
             $endTime = strtotime(
                 date("Y-m-d H:i:s", strtotime($user->updated_at.' +'.$user->expires_in.' seconds'))
@@ -118,8 +126,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
                 // Logout
                 return [];
             }
+
+            // Auth::login($user);
+            // return $user->setAppends(['ip', 'geoLocation'])->toArray();
+            return $user->toArray();
         }
-        Auth::login($user);
-        return $user->setAppends(['ip', 'geoLocation'])->toArray();
+        return [];
     }
 }
