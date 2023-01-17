@@ -1,7 +1,7 @@
 ### Rezet
 
 #### Description
-Frontend runs on Vue 2 (& blade), Backend on Laravel 8
+Frontend runs on Vue 2, Backend on Laravel 8
 
 #### Installation
 1. `git clone`
@@ -12,8 +12,9 @@ Frontend runs on Vue 2 (& blade), Backend on Laravel 8
 6. `npm install`
 7. `npm run dev`
 8. `php artisan serve`
-9. set `.env` APP_URL
-10. set `./config/services.php` -> `google` with your credos
-11. `ngrok http 80` with your port
+9. Set up "ngrok" url
+10. set `.env` APP_URL, MIX_APP_URL, MIX_API_URL
+11. set `./config/services.php` -> `google` with your credos
+12. `ngrok http 80` with your port
 NOTE: This app tuned to work with `https` Ngrok, in other case set: `.env` SSL=false
 
