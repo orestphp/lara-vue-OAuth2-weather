@@ -12,9 +12,6 @@
  * @returns {Promise<unknown>}
  */
 export function getWeather(lat, lon, token) {
-    // TODO: if "localhost" & location discarded: get country`s capital lat & long
-    let clientLang = navigator.language || navigator.userLanguage;
-
     // get Weather
     return new Promise((resolve, reject) => {
         axios.get(`${process.env.MIX_API_URL}/getweather?lat=${lat}&lon=${lon}&token=${token}`)
