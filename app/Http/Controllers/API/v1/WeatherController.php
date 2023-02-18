@@ -27,6 +27,7 @@ class WeatherController extends Controller
      */
     public function getWeather(Request $request)
     {
+        // TODO: move auth to middleware (will be fixed by adding Sanctum)
         // Get user
         $token = $request->input('token');
         $user = $this->userRepository->findByToken($token);
@@ -36,15 +37,15 @@ class WeatherController extends Controller
 
         // Init params
         $lat = $request->input('lat');
-        $lon = $request->input('lon');
+        $lon = $request->input('lon');// lng
         $url = env('WEATHER_URL').'?lat='.$lat.'&lon='.$lon.'&appid='.env('WEATHER_KEY');
 
         // Request
-        $jsonCacheResponse = Redis::get('weather:' . $user['email']);
+        $jsonCacheResponse = Redis::get('weather:lat='.$lat.'&lon='.$lon);
         if(!$jsonCacheResponse) {
             $response = Http::get($url);
             $weatherArray = $response->collect()->toArray();
-            $weatherArray = ['user' => $user, 'main' => $weatherArray['main']];
+            $weatherArray = ['user' => $user, 'main' => $weatherArray];// ['main']
             // Redis cache
             Redis::set('weather:' . $user['email'], json_encode($weatherArray), 'EX', 60 * 60 * 12);// 12 hours
         } else {

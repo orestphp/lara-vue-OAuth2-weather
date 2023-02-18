@@ -65,34 +65,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * User's ip
-     *
-     * @return string
-     */
-    public function getIpAttribute(): string
-    {
-        return $this->attributes['ip'] = request()->ip();
-    }
-
-    /**
-     * In case user discard browser location and ip isn't local
-     *
-     * geoLocation: {
-     *   city: "Ebeltoft",
-     *   region: "Central Jutland",
-     *   country: "Denmark",
-     *   countryCode: "DK",
-     *   latitude: 56.1944,
-     *   longitude: 10.6821
-     * }
-     *
-     * @return array
-     */
-    public function getGeoLocationAttribute(): array
-    {
-        $local = request()->ip() == ('127.0.0.1' || '0.0.0.0' || null);
-        $details = (!$local) ?? GeoLocation::lookup(request()->ip());
-        return $this->attributes['geoLocation'] = (!$local && $details->toArray()) ? $details->toArray() : [];
-    }
 }

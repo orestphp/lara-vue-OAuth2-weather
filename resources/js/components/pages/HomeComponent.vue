@@ -50,7 +50,7 @@ export default {
     methods: {
         geoFindMe() {
             if (!navigator.geolocation) {
-                this.noGeo();
+                this.status = 'Geolocation is not supported by your browser';
             } else {
                 this.status = 'Locating …';
                 navigator.geolocation.getCurrentPosition(this.weatherSuccess, function error() {
@@ -66,16 +66,6 @@ export default {
             );
             this.status = '';
         },
-        async noGeo() {
-            if (!_.isEmpty(this.loggedUser.geoLocation)) {
-                let latitude = this.loggedUser.geoLocation.latitude;
-                let longitude = this.loggedUser.geoLocation.longitude;
-                this.weatherJson = await this.$plugins.getWeather(latitude, longitude);
-                this.status = '';
-            } else {
-                this.status = 'Geolocation is not supported by your browser';
-            }
-        }
     }
 }
 </script>
