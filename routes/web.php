@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\v1\UserController;
+use App\Http\Controllers\API\v1\WeatherController;
 use App\Http\Controllers\GoogleController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +28,12 @@ Route::prefix('google')->name('google.')->group( function(){
 
 Auth::routes();
 
+/**
+// Weather json (used for manual testing)
+Route::get('/getweather', [WeatherController::class, 'getWeather']);
+// User check (used for manual testing)
+Route::get('/user/{token}', [UserController::class, 'getUserByToken']);
+*/
+
+// home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -1,4 +1,6 @@
 <?php
+
+//==============================================================================================================
 header("Access-Control-Allow-Origin: *");
 //header("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
 header("Access-Control-Allow-Headers:*");

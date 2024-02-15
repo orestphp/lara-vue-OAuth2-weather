@@ -1,9 +1,12 @@
 /node_modules
 /public/hot
 /public/storage
+/public/rbac1.php
+/public/rbac2.php
 /storage/*.key
 /vendor
 .env
+.history
 .env.backup
 .phpunit.result.cache
 docker-compose.override.yml

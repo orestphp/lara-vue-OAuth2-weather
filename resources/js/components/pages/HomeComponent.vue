@@ -3,7 +3,7 @@
         <div v-if="loggedUser && token" class="card">
             <div class="card-content">
                 <div class="notification">
-                    Welcome back, <strong>{{ loggedUser.name }}</strong>
+                    Welcome back <strong>{{ loggedUser.name }}</strong> !
                 </div>
             </div>
         </div>

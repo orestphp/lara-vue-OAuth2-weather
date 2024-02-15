@@ -33,7 +33,7 @@ return [
     'google' => [
         'client_id' => env('MIX_APP_OAUTH_CLIENT_ID'),
         'client_secret' => env('MIX_APP_OAUTH_CLIENT_SECRET'),
-        'redirect' => env('MIX_API_URL').'/google/callback'
+        'redirect' => env('MIX_API_URL').'/api/google/callback'
     ],
 
 ];

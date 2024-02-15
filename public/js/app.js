@@ -5333,7 +5333,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       });
     },
     socialLogin: function socialLogin(provider, response) {
-      this.$http.get("".concat("https://0632-2a02-2378-106e-4fb4-39ac-c442-704c-d44c.eu.ngrok.io/api", "/").concat(provider, "/login/"), response).then(function (response) {
+      this.$http.get("".concat("https://f236-2a02-2378-1238-f4ce-4e0e-d98c-439c-bafa.ngrok-free.app", "/").concat(provider, "/login/"), response).then(function (response) {
         document.getElementById('dnthave2').href = response.data.url;
         document.getElementById('dnthave2').click();
       })["catch"](function (error) {
@@ -5397,7 +5397,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   methods: {
     geoFindMe: function geoFindMe() {
       if (!navigator.geolocation) {
-        this.noGeo();
+        this.status = 'Geolocation is not supported by your browser';
       } else {
         this.status = 'Locating …';
         navigator.geolocation.getCurrentPosition(this.weatherSuccess, function error() {
@@ -5421,35 +5421,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
               return _context.stop();
           }
         }, _callee);
-      }))();
-    },
-    noGeo: function noGeo() {
-      var _this2 = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var latitude, longitude;
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) switch (_context2.prev = _context2.next) {
-            case 0:
-              if (_.isEmpty(_this2.loggedUser.geoLocation)) {
-                _context2.next = 9;
-                break;
-              }
-              latitude = _this2.loggedUser.geoLocation.latitude;
-              longitude = _this2.loggedUser.geoLocation.longitude;
-              _context2.next = 5;
-              return _this2.$plugins.getWeather(latitude, longitude);
-            case 5:
-              _this2.weatherJson = _context2.sent;
-              _this2.status = '';
-              _context2.next = 10;
-              break;
-            case 9:
-              _this2.status = 'Geolocation is not supported by your browser';
-            case 10:
-            case "end":
-              return _context2.stop();
-          }
-        }, _callee2);
       }))();
     }
   }
@@ -5598,12 +5569,16 @@ window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js
 
 // VueSocialauth
 Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_0__["default"], axios);
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.common['Access-Control-Allow-Headers'] = '*';
+axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, PUT, DELETE, OPTIONS';
+//"Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
 Vue.use(vue_social_auth__WEBPACK_IMPORTED_MODULE_1__["default"], {
   providers: {
     google: {
-      clientId: "".concat("143273648787-1jb1sak0mq6ia13qkoqvrv7lkf7toi2p.apps.googleusercontent.com"),
-      client_secret: "".concat("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"),
-      redirectUri: "".concat("https://0632-2a02-2378-106e-4fb4-39ac-c442-704c-d44c.eu.ngrok.io/api", "/google/callback")
+      clientId: "".concat("143273648787-baf4mi9gr1b1vepgthej8fd2lctq8vt5.apps.googleusercontent.com"),
+      client_secret: "".concat("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"),
+      redirectUri: "".concat("https://f236-2a02-2378-1238-f4ce-4e0e-d98c-439c-bafa.ngrok-free.app", "/google/callback")
     }
   }
 });
@@ -5787,12 +5762,9 @@ __webpack_require__.r(__webpack_exports__);
  * @returns {Promise<unknown>}
  */
 function getWeather(lat, lon, token) {
-  // TODO: if "localhost" & location discarded: get country`s capital lat & long
-  var clientLang = navigator.language || navigator.userLanguage;
-
   // get Weather
   return new Promise(function (resolve, reject) {
-    axios.get("".concat("https://0632-2a02-2378-106e-4fb4-39ac-c442-704c-d44c.eu.ngrok.io/api", "/getweather?lat=").concat(lat, "&lon=").concat(lon, "&token=").concat(token)).then(function (result) {
+    axios.get("".concat("https://f236-2a02-2378-1238-f4ce-4e0e-d98c-439c-bafa.ngrok-free.app", "/getweather?lat=").concat(lat, "&lon=").concat(lon, "&token=").concat(token)).then(function (result) {
       // return JSON.stringify(result.data);
       resolve(result.data);
     })["catch"](function (error) {
@@ -5882,7 +5854,7 @@ var users = {
                 break;
               }
               _context.next = 5;
-              return axios.get("".concat("https://0632-2a02-2378-106e-4fb4-39ac-c442-704c-d44c.eu.ngrok.io/api", "/user/").concat(token)).then(function (result) {
+              return axios.get("".concat("https://f236-2a02-2378-1238-f4ce-4e0e-d98c-439c-bafa.ngrok-free.app", "/user/").concat(token)).then(function (result) {
                 commit('setUser', result.data);
               })["catch"](function (error) {
                 console.log(error.response && error.response.data.message || 'Error.');
